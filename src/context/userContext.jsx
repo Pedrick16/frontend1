@@ -4,25 +4,24 @@ import { createContext, useState, useEffect } from 'react';
 export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!user) {
-        try {
-          const response = await axios.get('/profile');
-          setUser(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
+      if (!userInfo) {
+          axios.get('/profile').then(({data}) => {
+            setUserInfo(data);
 
-    fetchData(); // Call the function inside useEffect
-  }, ); 
+          });
+         
+      
+      }
+    
+
+ // Call the function inside useEffect
+  }, []); 
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ userInfo, setUserInfo}}>
       {children}
     </UserContext.Provider>
   );

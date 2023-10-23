@@ -10,12 +10,12 @@ import { UserContext } from '../context/userContext'
 
 const Logout = () => {
     const navigate = useNavigate()
-    const {  setUser } = useContext(UserContext)
+    const {  setUserInfo } = useContext(UserContext)
 
     const logoutUser = async() => {
         try {
           await axios.post('/logout')
-          setUser(null)
+          setUserInfo({})
           navigate('/')
         } catch (error) {
           console.log(error)

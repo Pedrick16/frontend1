@@ -1,24 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import sampleImg from '../image/GreenDrop_Station_Aluminum_Can_Coke.jpg'
 
 import Navbar from '../components/Navbar'
-import axios from 'axios'
+
 import { Link } from 'react-router-dom'
+import { useProductStore } from '../store/Product'
 
 const Index = () => {
-    const [data, setData] = useState([])
+    const {activeProduct, fetchActiveProduct } = useProductStore()
 
     useEffect(() => {
-        const getData = async () => {
-          try {
-            const response = await axios.get('/get-active-products');
-            setData(response.data);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-    
-        getData();
+      fetchActiveProduct()
       }, []);
     
      
@@ -29,7 +21,7 @@ const Index = () => {
 
     <div className='row pt-5'>
     
-    {data.map((item) => (
+    {activeProduct.map((item) => (
         <div className="col-3 pb-2" key={item._id}>
         
         <div className="card" style={{ width: '18rem' }}>
